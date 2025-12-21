@@ -20,7 +20,7 @@ data:
     e = some(where (p.eft == allow))
 
     [matchers]
-    m = r.sub == p.sub && r.obj == p.obj && r.act == p.act
+    m = r.sub == p.sub && (r.obj == p.obj || p.obj == "*") && (r.act == p.act || p.act == "*")
   
   policy.csv: |
     # Example policy file
@@ -100,7 +100,7 @@ spec:
           periodSeconds: 10
         readinessProbe:
           httpGet:
-            path: /readyz
+            path: /health
             port: 8443
             scheme: HTTPS
           initialDelaySeconds: 5

@@ -113,7 +113,7 @@ func TestHandleAdmission(t *testing.T) {
 			expectedStatus: http.StatusForbidden,
 		},
 		{
-			name: "Viewer can get resources",
+			name: "Viewer cannot use non-GET operations",
 			request: &admissionv1.AdmissionRequest{
 				UID: "test-uid-4",
 				UserInfo: authenticationv1.UserInfo{
@@ -123,7 +123,7 @@ func TestHandleAdmission(t *testing.T) {
 					Resource: "pods",
 				},
 				Namespace: "default",
-				Operation: admissionv1.Connect, // Using Connect as a proxy for GET
+				Operation: admissionv1.Connect,
 			},
 			expectedAllow:  false,
 			expectedStatus: http.StatusForbidden,
