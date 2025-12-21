@@ -268,35 +268,6 @@ kubectl delete -f deploy/kubernetes/deployment.yaml
 kubectl delete namespace casbin-system
 ```
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
-
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [Casbin](https://casbin.org/) - The authorization library that powers this webhook
-- [Kubernetes](https://kubernetes.io/) - The container orchestration platform
-
-## Related Projects
-
-- [casbin/casbin](https://github.com/casbin/casbin) - An authorization library that supports access control models like ACL, RBAC, ABAC
-- [kubernetes-sigs/controller-runtime](https://github.com/kubernetes-sigs/controller-runtime) - Kubernetes controller runtime
-
-## Support
-
-- 📖 [Documentation](https://github.com/casbin/casbin-admission-webhook)
-- 💬 [Discussions](https://github.com/casbin/casbin-admission-webhook/discussions)
-- 🐛 [Issue Tracker](https://github.com/casbin/casbin-admission-webhook/issues)
-- 📧 [Casbin Forum](https://forum.casbin.com/)
