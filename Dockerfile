@@ -1,6 +1,8 @@
 # Build stage
 FROM golang:1.25-alpine AS builder
 
+RUN apk --no-cache add ca-certificates git
+
 WORKDIR /workspace
 
 # Copy go mod files

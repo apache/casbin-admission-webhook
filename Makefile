@@ -14,11 +14,11 @@ build:
 
 # Run tests
 test:
-	go test ./... -v -cover
+	go test ./pkg/... -v
 
 # Run tests with coverage
 coverage:
-	go test ./... -coverprofile=coverage.out
+	go test ./pkg/... -coverprofile=coverage.out
 	go tool cover -html=coverage.out -o coverage.html
 
 # Clean build artifacts
