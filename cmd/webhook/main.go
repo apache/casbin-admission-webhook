@@ -10,7 +10,7 @@ import (
 
 	"github.com/casbin/casbin-admission-webhook/pkg/config"
 	"github.com/casbin/casbin-admission-webhook/pkg/webhook"
-	"github.com/casbin/casbin/v2"
+	"github.com/casbin/casbin/v3"
 	"k8s.io/klog/v2"
 )
 
