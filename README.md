@@ -2,7 +2,7 @@
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/casbin/casbin-admission-webhook)](https://goreportcard.com/report/github.com/casbin/casbin-admission-webhook)
 [![Build](https://github.com/casbin/casbin-admission-webhook/workflows/CI/badge.svg)](https://github.com/casbin/casbin-admission-webhook/actions)
-[![Godoc](https://godoc.org/github.com/casbin/casbin-admission-webhook?status.svg)](https://pkg.go.dev/github.com/casbin/casbin-admission-webhook)
+[![Godoc](https://pkg.go.dev/badge/github.com/casbin/casbin-admission-webhook.svg)](https://pkg.go.dev/github.com/casbin/casbin-admission-webhook)
 [![Release](https://img.shields.io/github/release/casbin/casbin-admission-webhook.svg)](https://github.com/casbin/casbin-admission-webhook/releases/latest)
 [![Discord](https://img.shields.io/discord/1022748306096537660?logo=discord&label=discord&color=5865F2)](https://discord.gg/S5UjpzGZjN)
 [![Sourcegraph](https://sourcegraph.com/github.com/casbin/casbin-admission-webhook/-/badge.svg)](https://sourcegraph.com/github.com/casbin/casbin-admission-webhook?badge)
