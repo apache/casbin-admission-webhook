@@ -1,0 +1,10 @@
+# Example policy file
+# Format: p, subject, object, action
+# Allow admin to do everything
+p, admin, *, *
+# Allow developer to create/update/delete pods in development namespace
+p, developer, pods/development, CREATE
+p, developer, pods/development, UPDATE
+p, developer, pods/development, DELETE
+# Allow viewer to get resources
+p, viewer, */*, GET

@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: casbin-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casbin-config
+  namespace: casbin-system
+data:
+  model.conf: |
+    [request_definition]
+    r = sub, obj, act
+
+    [policy_definition]
+    p = sub, obj, act
+
+    [policy_effect]
+    e = some(where (p.eft == allow))
+
+    [matchers]
+    m = r.sub == p.sub && r.obj == p.obj && r.act == p.act
+  
+  policy.csv: |
+    # Example policy file
+    # Format: p, subject, object, action
+    # Allow admin to do everything
+    p, admin, *, *
+    # Allow developer to create/update/delete pods in development namespace
+    p, developer, pods/development, CREATE
+    p, developer, pods/development, UPDATE
+    p, developer, pods/development, DELETE
+    # Allow viewer to get resources
+    p, viewer, */*, GET
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: casbin-admission-webhook
+  namespace: casbin-system
+spec:
+  ports:
+  - port: 443
+    targetPort: 8443
+    protocol: TCP
+    name: https
+  selector:
+    app: casbin-admission-webhook
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: casbin-admission-webhook
+  namespace: casbin-system
+  labels:
+    app: casbin-admission-webhook
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: casbin-admission-webhook
+  template:
+    metadata:
+      labels:
+        app: casbin-admission-webhook
+    spec:
+      serviceAccountName: casbin-admission-webhook
+      containers:
+      - name: webhook
+        image: casbin/casbin-admission-webhook:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8443
+          name: https
+        env:
+        - name: WEBHOOK_PORT
+          value: "8443"
+        - name: TLS_CERT_FILE
+          value: /etc/webhook/certs/tls.crt
+        - name: TLS_KEY_FILE
+          value: /etc/webhook/certs/tls.key
+        - name: CASBIN_MODEL_FILE
+          value: /etc/webhook/casbin/model.conf
+        - name: CASBIN_POLICY_FILE
+          value: /etc/webhook/casbin/policy.csv
+        volumeMounts:
+        - name: webhook-certs
+          mountPath: /etc/webhook/certs
+          readOnly: true
+        - name: casbin-config
+          mountPath: /etc/webhook/casbin
+          readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
+      volumes:
+      - name: webhook-certs
+        secret:
+          secretName: casbin-webhook-certs
+      - name: casbin-config
+        configMap:
+          name: casbin-config
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: casbin-admission-webhook
+  namespace: casbin-system
