@@ -1,0 +1,27 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: casbin-admission-webhook
+webhooks:
+- name: validate.casbin.io
+  clientConfig:
+    service:
+      name: casbin-admission-webhook
+      namespace: casbin-system
+      path: "/validate"
+    caBundle: "" # This should be filled with the CA certificate
+  rules:
+  - operations: ["CREATE", "UPDATE", "DELETE"]
+    apiGroups: ["*"]
+    apiVersions: ["*"]
+    resources: ["*"]
+  admissionReviewVersions: ["v1", "v1beta1"]
+  sideEffects: None
+  failurePolicy: Fail
+  timeoutSeconds: 10
+  namespaceSelector:
+    matchExpressions:
+    - key: casbin-webhook
+      operator: NotIn
+      values:
+      - disabled
