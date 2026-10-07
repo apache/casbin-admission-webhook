@@ -15,7 +15,6 @@ A Kubernetes Admission Webhook that uses [Casbin](https://casbin.org/) for Polic
 - 🚀 **Easy Deployment**: Simple Kubernetes manifests and automated certificate generation
 - 🧪 **Well-tested**: Comprehensive unit tests and integration tests
 - 📦 **Container-ready**: Pre-built Docker images available
-- 🔄 **CI/CD**: Automated releases with semantic versioning
 - 🛡️ **Secure**: Runs with minimal privileges and read-only root filesystem
 
 ## How It Works
